@@ -1,15 +1,21 @@
 package com.demo.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -93,6 +99,21 @@ public class AccountController {
 		String json2 = gson.toJson(personJsonObject);
 
 		return json2;
+	}
+
+	/**
+	 * Create account.
+	 *
+	 * @param entity
+	 * @param response
+	 *
+	 */
+	@RequestMapping(value = "/createSave", method = POST, consumes = "application/json")
+	public @ResponseBody
+	Map<String, ? extends Object> create(@RequestBody Account entity,
+			HttpServletResponse response) {
+		accountService.insert(entity);
+		return null;
 	}
 
 	class PersonJsonObject {

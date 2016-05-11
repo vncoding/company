@@ -29,4 +29,12 @@ public interface AccountService {
 	 * @return count
 	 */
 	int getAllCount();
+
+	/**
+	 * Insert account.
+	 *
+	 * @param record
+	 * @return primary key
+	 */
+	int insert(Account record);
 }

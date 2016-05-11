@@ -28,4 +28,8 @@ public class AcountServiceImpl implements AccountService {
 		return this.accountDao.getAllCount();
 	}
 
+	public int insert(Account account) {
+		return this.accountDao.insert(account);
+	}
+
 }

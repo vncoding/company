@@ -26,4 +26,14 @@ public class HomeController {
 		return "loginPage";
 	}
 
+	/**
+	 * Home page.
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = { "/" })
+	public String getHomePage() {
+		return "accountsPage";
+	}
+
 }

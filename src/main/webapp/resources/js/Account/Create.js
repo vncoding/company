@@ -1,8 +1,8 @@
 $(document).ready(function() {
 	var validator = $("#accountForm").validate({
 		rules: {
-			firstName: "required",
-			lastName: "required",
+			userName: "required",
+			phone: "required",
 			password: {
 				required: true,
 				minlength: 5,
@@ -17,7 +17,6 @@ $(document).ready(function() {
 			email: {
 				required: true,
 				email: true
-				,remote: "/validator/checkemail"
 			}
 		},
 		messages: {
@@ -35,7 +34,6 @@ $(document).ready(function() {
 			email: {
 				required: "Please enter a valid email address",
 				minlength: "Please enter a valid email address"
-				,remote: jQuery.format("{0} is already in use")
 			}
 		},
 		errorPlacement: function(error, element) {
@@ -43,15 +41,16 @@ $(document).ready(function() {
 		},
 		submitHandler: function() {
 			var jsonData = {
-				firstName : $("input#firstName").val(),
-				lastName : $("input#lastName").val(),
+				userName : $("input#userName").val(),
+				phone : $("input#phone").val(),
 				password : $("input#password").val(),
 				email : $("input#email").val(),
-				isEnabled : $('input#isEnabled').is(':checked')
+				address : $("input#address").val(),
+				role : $('input[name=role]').is(':checked').val()
 			};
 			$.ajax({
 				  type: "POST",
-				  url: "/company/account/",
+				  url: "/company/account/createSave",
 				  data: JSON.stringify(jsonData),
 				  contentType: "application/json; charset=utf-8",
 				  success: function(response,status,xhr) {
