@@ -1,8 +1,10 @@
 $(document).ready(function() {
 	var validator = $("#accountForm").validate({
 		rules: {
-			firstName: "required",
-			lastName: "required",
+			userName: "required",
+			phone: "required",
+			address: "required",
+			role: "required",
 			password: {
 				required: true,
 				minlength: 5,
@@ -17,12 +19,11 @@ $(document).ready(function() {
 			email: {
 				required: true,
 				email: true
-				,remote: "/validator/checkemail"
 			}
 		},
 		messages: {
-			firstName: {required : "Enter your firstname"},
-			lastName:  {required  : "Enter your lastname"},
+			userName: {required : "Enter your username"},
+			phone:  {required  : "Enter your phone"},
 			password:  {
 				required: "Provide a password",
 				minlength: jQuery.format("Enter at least {0} characters"),
@@ -35,23 +36,25 @@ $(document).ready(function() {
 			email: {
 				required: "Please enter a valid email address",
 				minlength: "Please enter a valid email address"
-				,remote: jQuery.format("{0} is already in use")
-			}
+			},
+			address: {required : "Enter your address"},
+			role: {required : "Enter your role"}
 		},
 		errorPlacement: function(error, element) {
 			error.appendTo(element.next());
 		},
 		submitHandler: function() {
 			var jsonData = {
-				firstName : $("input#firstName").val(),
-				lastName : $("input#lastName").val(),
+				userName : $("input#userName").val(),
+				phone : $("input#phone").val(),
 				password : $("input#password").val(),
 				email : $("input#email").val(),
-				isEnabled : $('input#isEnabled').is(':checked')
+				address : $("input#address").val(),
+				role : $("input[name=role]:checked").val()
 			};
 			$.ajax({
 				  type: "POST",
-				  url: "/company/account/",
+				  url: "/company/account/createSave/",
 				  data: JSON.stringify(jsonData),
 				  contentType: "application/json; charset=utf-8",
 				  success: function(response,status,xhr) {

@@ -8,14 +8,6 @@ import com.demo.bean.Account;
 public interface AccountService {
 
 	/**
-	 * Get User by Id.
-	 *
-	 * @param userId
-	 * @return Account
-	 */
-	public Account getUserById(int userId);
-
-	/**
 	 * Select all pagging.
 	 *
 	 * @param rowbounds
@@ -37,4 +29,28 @@ public interface AccountService {
 	 * @return primary key
 	 */
 	int insert(Account record);
+
+	/**
+	 * Delete account by id.
+	 *
+	 * @param id
+	 * @return total record deleted.
+	 */
+    int delete(Integer id);
+
+    /**
+     * Select by primary key.
+     *
+     * @param accountId
+     * @return Account
+     */
+    Account selectByPrimaryKey(Integer accountId);
+
+    /**
+     * Update account.
+     *
+     * @param record
+     * @return total record update.
+     */
+    int updateByPrimaryKey(Account record);
 }

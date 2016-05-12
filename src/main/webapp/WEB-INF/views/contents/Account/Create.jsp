@@ -48,8 +48,8 @@
 		<div class="control-group">
 			<label class="control-label" for="role"><fmt:message key="domain.account.column.role"/><em>*</em></label>
 			<div class="controls">
-				<input type="radio" id="Admin" name="role" value="1" > Admin
-				<input type="radio" id="User" name="role" value="0" > User
+				<input type="radio" id="Admin" name="role" value="ROLE_ADMIN" > Admin
+				<input type="radio" id="User" name="role" value="USER" > User
 				<span class="help-inline"></span>
 			</div>
 		</div>

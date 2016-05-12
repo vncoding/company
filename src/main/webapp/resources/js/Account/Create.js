@@ -3,6 +3,8 @@ $(document).ready(function() {
 		rules: {
 			userName: "required",
 			phone: "required",
+			address: "required",
+			role: "required",
 			password: {
 				required: true,
 				minlength: 5,
@@ -20,8 +22,8 @@ $(document).ready(function() {
 			}
 		},
 		messages: {
-			firstName: {required : "Enter your firstname"},
-			lastName:  {required  : "Enter your lastname"},
+			userName: {required : "Enter your username"},
+			phone:  {required  : "Enter your phone"},
 			password:  {
 				required: "Provide a password",
 				minlength: jQuery.format("Enter at least {0} characters"),
@@ -34,7 +36,9 @@ $(document).ready(function() {
 			email: {
 				required: "Please enter a valid email address",
 				minlength: "Please enter a valid email address"
-			}
+			},
+			address: {required : "Enter your address"},
+			role: {required : "Enter your role"}
 		},
 		errorPlacement: function(error, element) {
 			error.appendTo(element.next());
@@ -46,11 +50,11 @@ $(document).ready(function() {
 				password : $("input#password").val(),
 				email : $("input#email").val(),
 				address : $("input#address").val(),
-				role : $('input[name=role]').is(':checked').val()
+				role : $("input[name=role]:checked").val()
 			};
 			$.ajax({
 				  type: "POST",
-				  url: "/company/account/createSave",
+				  url: "/company/account/createSave/",
 				  data: JSON.stringify(jsonData),
 				  contentType: "application/json; charset=utf-8",
 				  success: function(response,status,xhr) {

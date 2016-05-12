@@ -16,10 +16,6 @@ public class AcountServiceImpl implements AccountService {
     @Resource
     private AccountMapper accountDao;
 
-    public Account getUserById(int userId) {
-        return this.accountDao.selectByPrimaryKey(userId);
-    }
-
 	public List<Account> sellectAllPagging(Map<String,Object> map) {
 		return this.accountDao.sellectAllPagging(map);
 	}
@@ -30,6 +26,18 @@ public class AcountServiceImpl implements AccountService {
 
 	public int insert(Account account) {
 		return this.accountDao.insert(account);
+	}
+
+	public int delete(Integer id) {
+		return this.accountDao.deleteByPrimaryKey(id);
+	}
+
+	public Account selectByPrimaryKey(Integer accountId) {
+		return this.accountDao.selectByPrimaryKey(accountId);
+	}
+
+	public int updateByPrimaryKey(Account record) {
+		return this.accountDao.updateByPrimaryKey(record);
 	}
 
 }

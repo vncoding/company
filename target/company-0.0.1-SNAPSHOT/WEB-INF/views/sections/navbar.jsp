@@ -23,8 +23,8 @@
 					<ul class="nav">
 						<li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><fmt:message key="navbar.menu.domain"/><b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="${pageContext.request.contextPath}/company/account/"><fmt:message key="navbar.menu.domain.account"/></a></li>
-								<li><a href="${pageContext.request.contextPath}/domain/roles/list"><fmt:message key="navbar.menu.domain.role"/></a></li>
+								<li><a href="${pageContext.request.contextPath}/account/"><fmt:message key="navbar.menu.domain.account"/></a></li>
+								<li><a href="${pageContext.request.contextPath}/question/"><fmt:message key="navbar.menu.domain.question"/></a></li>
 							</ul>
 						</li>
 						</ul>

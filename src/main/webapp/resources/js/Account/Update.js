@@ -1,22 +1,30 @@
 $(document).ready(function() {
 	var validator = $("#accountEditForm").validate({
 		rules: {
-			firstName: "required",
-			lastName: "required",
+			userName: "required",
+			phone: "required",
+			address: "required",
+			role: "required",
 			password: {
 				required: true,
 				minlength: 5,
-				maxlength: 10
+				maxlength:10
 			},
 			password_confirm: {
 				required: true,
+				minlength: 5,
+				maxlength: 10,
 				equalTo: "#password"
+			},
+			email: {
+				required: true,
+				email: true
 			}
 		},
 		messages: {
-			firstName: "Enter your firstname",
-			lastName: "Enter your lastname",
-			password: {
+			userName: {required : "Enter your username"},
+			phone:  {required  : "Enter your phone"},
+			password:  {
 				required: "Provide a password",
 				minlength: jQuery.format("Enter at least {0} characters"),
 				maxlength: jQuery.format("Enter a maximum of {0} characters")
@@ -24,30 +32,37 @@ $(document).ready(function() {
 			password_confirm: {
 				required: "Repeat your password",
 				equalTo: "Enter the same password as above"
-			}
+			},
+			email: {
+				required: "Please enter a valid email address",
+				minlength: "Please enter a valid email address"
+			},
+			address: {required : "Enter your address"},
+			role: {required : "Enter your role"}
 		},
 		errorPlacement: function(error, element) {
-			error.appendTo( element.next() );
+			error.appendTo(element.next());
 		},
 		submitHandler: function() {
 			var jsonData = {
-				id : $("input#id").val(),
-				firstName : $("input#firstName").val(),
-				lastName : $("input#lastName").val(),
+				accountId : $("input#accountId").val(),
+				userName : $("input#userName").val(),
+				phone : $("input#phone").val(),
 				password : $("input#password").val(),
 				email : $("input#email").val(),
-				isEnabled : $('input#isEnabled').is(':checked')
+				address : $("input#address").val(),
+				role : $("input[name=role]:checked").val()
 			};
-			$.ajax({  
-				  type: "PUT",  
-				  url: "/domain/accounts/"+$("input#id").val(),  
+			$.ajax({
+				  type: "POST",
+				  url: "/company/account/updateSave/"+$("input#accountId").val(),
 				  data: JSON.stringify(jsonData),
 				  contentType: "application/json; charset=utf-8",
-				  success: function(response,status,xhr) { 
-					  document.location.href='/domain/accounts/list';
+				  success: function(response,status,xhr) {
+					  document.location.href='/company/account/';
 				  }
-				});  
-			return false; 
+				});
+			return false;
 		},
 		success: function(label) {
 		}
@@ -59,12 +74,14 @@ $(document).ready(function() {
 
 function resetButtonHandler(){
 	$("#resetButton").click(function() {
-		$("input#firstName").val($("input#firstName").attr("data-reset"));
-		$("input#lastName").val($("input#lastName").attr("data-reset"));
+		$("input#userName").val($("input#userName").attr("data-reset"));
+		$("input#phone").val($("input#phone").attr("data-reset"));
 		$("input#password").val($("input#password").attr("data-reset"));
 		$("input#password_confirm").val($("input#password").attr("data-reset"));
+		$("input#address").val($("input#address").attr("data-reset"));
+		$("input[name=role]").val($("input[name=role]").attr("data-reset"));
 		  return false;
-	});	
+	});
 }
 
 

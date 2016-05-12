@@ -1,20 +1,21 @@
 package com.demo.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,8 @@ import com.google.gson.GsonBuilder;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
+
+	private static final String MODEL_BEAN_ID = "crudObj";
 
 	@Autowired
 	private AccountService accountService;
@@ -72,9 +75,9 @@ public class AccountController {
 
 		Integer totalDisplayRecords = accountService.getAllCount();
 
-		Map<String,Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 
-		map.put("startIndex", pageNumber - 1);
+		map.put("startIndex", (pageNumber - 1) * pageDisplayLength);
 		map.put("pageSize", pageDisplayLength);
 
 		// Create page list data
@@ -108,11 +111,63 @@ public class AccountController {
 	 * @param response
 	 *
 	 */
-	@RequestMapping(value = "/createSave", method = POST, consumes = "application/json")
-	public @ResponseBody
-	Map<String, ? extends Object> create(@RequestBody Account entity,
+	@RequestMapping(value = "/createSave", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody Map<String, ? extends Object> create(@RequestBody Account entity,
 			HttpServletResponse response) {
-		accountService.insert(entity);
+		if (accountService.insert(entity) > 0) {
+			response.setStatus(HttpServletResponse.SC_CREATED);
+		} else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		}
+		return null;
+	}
+
+	/**
+	 * DELETE Operation
+	 *
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/{pk}", method = DELETE)
+	@ResponseBody
+	public boolean delete(@PathVariable("pk") Integer id, HttpServletResponse response) {
+		accountService.delete(id);
+		response.setStatus(HttpServletResponse.SC_OK);
+		return true;
+	}
+
+	/**
+	 * Call update page.
+	 *
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "update/{id}", method = GET)
+	public String update(@PathVariable("id") Integer id, Model model) {
+		Account entity = accountService.selectByPrimaryKey(id);
+		model.addAttribute(MODEL_BEAN_ID, entity);
+		return "updateAccountPage";
+	}
+
+	/**
+	 * UPDATE Account Operation
+	 *
+	 * @param accountForm
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/updateSave/{id}", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody Map<String, ? extends Object> update(@PathVariable Integer id, @RequestBody Account entity,
+			HttpServletResponse response) {
+		Account entityToUpdate = accountService.selectByPrimaryKey(id);
+		if (entityToUpdate != null) {
+			if (accountService.updateByPrimaryKey(entity) > 0) {
+				response.setStatus(HttpServletResponse.SC_OK);
+			} else {
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			}
+		}
 		return null;
 	}
 

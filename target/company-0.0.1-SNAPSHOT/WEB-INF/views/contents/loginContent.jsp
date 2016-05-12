@@ -17,7 +17,7 @@
 				<fieldset>
 					<div class="clearfix">
 						<input id="j_username" name="j_username" type="text"
-							placeholder="Email">
+							placeholder="Username">
 					</div>
 					<div class="clearfix">
 						<input id="j_password" name="j_password" type="password"
