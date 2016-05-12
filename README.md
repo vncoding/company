@@ -2,7 +2,7 @@
 Spring MVC 4 + Spring Sercurity 3 + MyBatis 3
 
 # sql
--- MySQL Workbench Forward Engineering
+--- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -48,12 +48,11 @@ ENGINE = InnoDB;
 -- Table `mydb`.`Question`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`Question` (
-  `QuestionId` INT NOT NULL,
+  `QuestionId` INT NOT NULL AUTO_INCREMENT,
   `QuestionContent` VARCHAR(500) NULL,
-  `AnswerId` INT NULL,
-  `TestId` INT NOT NULL,
+  `TestId` INT NULL,
   `Point` INT NULL,
-  PRIMARY KEY (`QuestionId`, `TestId`),
+  PRIMARY KEY (`QuestionId`),
   INDEX `fk_Question_Test1_idx` (`TestId` ASC),
   CONSTRAINT `fk_Question_Test1`
     FOREIGN KEY (`TestId`)
@@ -126,7 +125,7 @@ ENGINE = InnoDB;
 -- Table `mydb`.`QuestionResult`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`QuestionResult` (
-  `QuestionResultId` INT NOT NULL,
+  `QuestionResultId` INT NOT NULL AUTO_INCREMENT,
   `QuestionResultAnswer` VARCHAR(45) NULL,
   `TestResultId` INT NOT NULL,
   PRIMARY KEY (`QuestionResultId`, `TestResultId`),
